@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Essencia — Mode Femme & Homme</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#faf9f6;color:#171717}
+header{background:#fff;border-bottom:1px solid #e5e1d8;position:sticky;top:0;z-index:10}
+.top{max-width:1150px;margin:auto;padding:20px 18px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{font-family:Georgia,serif;font-size:30px;letter-spacing:4px}
+nav{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+nav a{color:#171717;text-decoration:none;font-size:14px}
+.cart{border:1px solid #171717;border-radius:22px;padding:9px 14px;background:#171717;color:#fff;cursor:pointer}
+.hero{max-width:1150px;margin:auto;padding:65px 18px 45px;display:grid;grid-template-columns:1.1fr .9fr;gap:35px;align-items:center}
+.hero h1{font-family:Georgia,serif;font-size:clamp(42px,7vw,78px);line-height:1}
+.hero p{margin:22px 0;color:#666;font-size:18px;line-height:1.6}
+.btn{display:inline-block;background:#171717;color:#fff;text-decoration:none;border:0;padding:13px 20px;border-radius:2px;cursor:pointer}
+.hero-card{min-height:350px;background:linear-gradient(145deg,#e9e4da,#b9ae9d);display:flex;align-items:end;padding:28px;font-family:Georgia,serif;font-size:30px}
+section{max-width:1150px;margin:auto;padding:35px 18px}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+h2{font-family:Georgia,serif;font-size:34px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:25px}
+.filter{padding:9px 15px;border:1px solid #d7d1c6;background:#fff;border-radius:20px;cursor:pointer}
+.filter.active{background:#171717;color:#fff}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.product{background:#fff;border:1px solid #e5e1d8}
+.pic{height:290px;background:#e7e2d9;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:22px;color:#625c52}
+.info{padding:15px}
+.info h3{font-size:16px;margin-bottom:7px}
+.price{font-weight:bold;margin-bottom:12px}
+.add{width:100%;padding:10px;background:#171717;color:#fff;border:0;cursor:pointer}
+.banner{background:#171717;color:#fff;padding:45px 25px;text-align:center;margin-top:20px}
+.banner h2{margin-bottom:10px}
+footer{background:#fff;border-top:1px solid #e5e1d8;margin-top:30px;padding:30px 18px;text-align:center;color:#666}
+#toast{position:fixed;bottom:20px;right:20px;background:#171717;color:#fff;padding:13px 18px;border-radius:4px;display:none}
+@media(max-width:800px){
+ .hero{grid-template-columns:1fr;padding-top:40px}
+ .hero-card{min-height:240px}
+ .grid{grid-template-columns:repeat(2,1fr)}
+ .pic{height:220px}
+ nav{gap:12px}
+}
+@media(max-width:480px){
+ .top{align-items:flex-start}
+ .logo{font-size:25px}
+ nav a{font-size:12px}
+ .grid{grid-template-columns:1fr 1fr;gap:10px}
+ .pic{height:180px;font-size:17px}
+ .info{padding:10px}
+ .hero{padding-bottom:20px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="top">
+    <div class="logo">ESSENCIA</div>
+    <nav>
+      <a href="#femme">Femme</a>
+      <a href="#homme">Homme</a>
+      <a href="#nouveautes">Nouveautés</a>
+      <a href="#promotions">Promotions</a>
+      <button class="cart" onclick="showCart()">Panier (<span id="count">0</span>)</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div>
+    <p>COLLECTION 2026</p>
+    <h1>L'élégance<br>au quotidien.</h1>
+    <p>Découvrez Essencia, votre boutique de mode pour femme et homme. Des pièces modernes, simples et élégantes.</p>
+    <a class="btn" href="#nouveautes">Découvrir la collection</a>
+  </div>
+  <div class="hero-card">ESSENCIA<br><small>Femme & Homme</small></div>
+</section>
+
+<section id="nouveautes">
+  <div class="section-title"><h2>Nouveautés</h2><span>Collection Essencia</span></div>
+  <div class="filters">
+    <button class="filter active" onclick="filterProducts('all',this)">Tout</button>
+    <button class="filter" onclick="filterProducts('femme',this)">Femme</button>
+    <button class="filter" onclick="filterProducts('homme',this)">Homme</button>
+  </div>
+  <div class="grid" id="products"></div>
+</section>
+
+<section id="femme">
+  <div class="section-title"><h2>Femme</h2></div>
+  <p>Des silhouettes élégantes pour tous les jours.</p>
+</section>
+
+<section id="homme">
+  <div class="section-title"><h2>Homme</h2></div>
+  <p>Une sélection moderne et facile à porter.</p>
+</section>
+
+<section id="promotions">
+  <div class="banner">
+    <h2>Les promotions Essencia</h2>
+    <p>Profitez bientôt de nos offres et nouveautés.</p>
+  </div>
+</section>
+</main>
+
+<footer>© 2026 ESSENCIA — Boutique de vêtements Femme & Homme</footer>
+<div id="toast"></div>
+
+<script>
+const products=[
+{name:"Robe Élégance",cat:"femme",price:"49,90 €",tag:"FEMME"},
+{name:"Ensemble Chic",cat:"femme",price:"59,90 €",tag:"FEMME"},
+{name:"Chemise Classique",cat:"homme",price:"39,90 €",tag:"HOMME"},
+{name:"Veste Essencia",cat:"homme",price:"69,90 €",tag:"HOMME"},
+{name:"Pantalon Satin",cat:"femme",price:"44,90 €",tag:"FEMME"},
+{name:"Polo Premium",cat:"homme",price:"34,90 €",tag:"HOMME"},
+{name:"Blazer Moderne",cat:"femme",price:"79,90 €",tag:"FEMME"},
+{name:"Jean Essencia",cat:"homme",price:"49,90 €",tag:"HOMME"}
+];
+let cart=0;
+function render(list=products){
+document.getElementById("products").innerHTML=list.map((p,i)=>`
+<div class="product">
+<div class="pic">${p.tag}</div>
+<div class="info"><h3>${p.name}</h3><div class="price">${p.price}</div>
+<button class="add" onclick="addCart('${p.name}')">Ajouter au panier</button></div>
+</div>`).join("");
+}
+function filterProducts(cat,el){
+document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));el.classList.add("active");
+render(cat==="all"?products:products.filter(p=>p.cat===cat));
+}
+function addCart(name){
+cart++;document.getElementById("count").textContent=cart;
+const t=document.getElementById("toast");t.textContent=name+" ajouté au panier ✓";t.style.display="block";
+setTimeout(()=>t.style.display="none",1800);
+}
+function showCart(){alert(cart?`Votre panier contient ${cart} article(s).`:"Votre panier est vide.");}
+render();
+</script>
+</body>
+</html>
